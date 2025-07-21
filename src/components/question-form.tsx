@@ -9,6 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { useCreateQuestion } from "@/http/use-create-question";
 import {
   Form,
   FormControl,
@@ -16,9 +18,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { useCreateQuestion } from "@/http/use-create-question";
+} from "../components/ui/form";
 
 // Esquema de validação no mesmo arquivo conforme solicitado
 const createQuestionSchema = z.object({
@@ -45,11 +45,12 @@ export function QuestionForm({ roomId }: QuestionFormProps) {
     },
   });
 
+  const { isSubmitting } = form.formState;
+
   async function handleCreateQuestion(data: CreateQuestionFormData) {
     await createQuestion(data);
+    form.reset();
   }
-
-  const { isSubmitting } = form.formState;
 
   return (
     <Card>
